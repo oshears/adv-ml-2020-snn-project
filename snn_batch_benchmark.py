@@ -357,7 +357,7 @@ test_dataset = MNIST(
 # Create a dataloader to iterate and batch data
 test_dataloader = DataLoader(
     test_dataset,
-    batch_size=batch_size,
+    batch_size=256,
     shuffle=True,
     num_workers=n_workers,
     pin_memory=gpu,
