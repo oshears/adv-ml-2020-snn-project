@@ -12,6 +12,7 @@ from time import time as t
 from bindsnet import ROOT_DIR
 from bindsnet.datasets import MNIST, DataLoader
 from bindsnet.encoding import PoissonEncoder, BernoulliEncoder, RankOrderEncoder
+from bindsnet.learning import PostPre, WeightDependentPostPre, Hebbian
 from bindsnet.evaluation import all_activity, proportion_weighting, assign_labels
 from bindsnet.network.monitors import Monitor
 from bindsnet.utils import get_square_weights, get_square_assignments
@@ -25,7 +26,7 @@ from bindsnet.analysis.plotting import (
 )
 
 # OYS Added
-from ..models.snn_models import IF_Network, LIF_Network, SRM0_Network, DiehlAndCook_Network
+from models.snn_models import IF_Network, LIF_Network, SRM0_Network, DiehlAndCook_Network
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--seed", type=int, default=0)
@@ -74,10 +75,19 @@ plot = args.plot
 gpu = args.gpu
 
 # OYS Added
+print("Encoding Scheme:",args.encoding)
+print("Neural Model:",args.neuron_model)
+print("Learning Technique:",args.update_rule)
 encoding = args.encoding
 neuron_model = args.neuron_model
-update_rule = args.update_rule
+update_rule = None
 
+if args.update_rule == "PostPre":
+    update_rule = PostPre
+elif args.update_rule == "WeightDependentPostPre":
+    update_rule = WeightDependentPostPre
+else:
+    update_rule = Hebbian
 
 update_interval = update_steps * batch_size
 
@@ -102,16 +112,21 @@ if n_workers == -1:
 n_sqrt = int(np.ceil(np.sqrt(n_neurons)))
 start_intensity = intensity
 
+# determine update rule
+
+
+
+
 # Build network.
 network = None
 if neuron_model == "IF":
-    network = IF_Network(update_rule=update_rule)
+    network = IF_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size)
 elif neuron_model == "LIF":
-    network = LIF_Network(update_rule=update_rule)
+    network = LIF_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28))
 elif neuron_model == "SRM0":
-    network = SRM0_Network(update_rule=update_rule)
+    network = SRM0_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28))
 else:
-    network = DiehlAndCook_Network(update_rule=update_rule)
+    network = DiehlAndCook_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28))
 
 # Directs network to GPU
 if gpu:
@@ -161,10 +176,8 @@ rates = torch.zeros((n_neurons, n_classes), device=device)
 accuracy = {"all": [], "proportion": []}
 
 # Voltage recording for excitatory and inhibitory layers.
-exc_voltage_monitor = Monitor(network.layers["Ae"], ["v"], time=int(time / dt))
-inh_voltage_monitor = Monitor(network.layers["Ai"], ["v"], time=int(time / dt))
+exc_voltage_monitor = Monitor(network.layers["Y"], ["v"], time=int(time / dt))
 network.add_monitor(exc_voltage_monitor, name="exc_voltage")
-network.add_monitor(inh_voltage_monitor, name="inh_voltage")
 
 # Set up monitors for spikes and voltages
 spikes = {}
@@ -280,7 +293,7 @@ for epoch in range(n_epochs):
         network.run(inputs=inputs, time=time, input_time_dim=1)
 
         # Add to spikes recording.
-        s = spikes["Ae"].get("s").permute((1, 0, 2))
+        s = spikes["Y"].get("s").permute((1, 0, 2))
         spike_record[
             (step * batch_size)
             % update_interval : (step * batch_size % update_interval)
@@ -289,13 +302,12 @@ for epoch in range(n_epochs):
 
         # Get voltage recording.
         exc_voltages = exc_voltage_monitor.get("v")
-        inh_voltages = inh_voltage_monitor.get("v")
 
         # Optionally plot various simulation information.
         if plot:
             image = batch["image"][:, 0].view(28, 28)
             inpt = inputs["X"][:, 0].view(time, 784).sum(0).view(28, 28)
-            input_exc_weights = network.connections[("X", "Ae")].w
+            input_exc_weights = network.connections[("X", "Y")].w
             square_weights = get_square_weights(
                 input_exc_weights.view(784, n_neurons), n_sqrt, 28
             )
@@ -303,7 +315,7 @@ for epoch in range(n_epochs):
             spikes_ = {
                 layer: spikes[layer].get("s")[:, 0].contiguous() for layer in spikes
             }
-            voltages = {"Ae": exc_voltages, "Ai": inh_voltages}
+            voltages = {"Y": exc_voltages}
 
             inpt_axes, inpt_ims = plot_input(
                 image, inpt, label=labels[step], axes=inpt_axes, ims=inpt_ims
@@ -372,7 +384,7 @@ for step, batch in enumerate(test_dataset):
     network.run(inputs=inputs, time=time, input_time_dim=1)
 
     # Add to spikes recording.
-    spike_record = spikes["Ae"].get("s").permute((1, 0, 2))
+    spike_record = spikes["Y"].get("s").permute((1, 0, 2))
 
     # Convert the array of labels into a tensor
     label_tensor = torch.tensor(batch["label"], device=device)

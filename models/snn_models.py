@@ -30,6 +30,7 @@ class IF_Network(Network):
         tc_theta_decay: float = 1e7,
         inpt_shape: Optional[Iterable[int]] = None,
         update_rule: Optional[LearningRule] = PostPre,
+        batch_size: int = 1,
     ) -> None:
         # language=rst
         """
@@ -60,6 +61,7 @@ class IF_Network(Network):
         self.n_neurons = n_neurons
         self.inh = inh
         self.dt = dt
+        self.batch_size = batch_size
 
         input_layer = Input(
             n=self.n_inpt, shape=self.inpt_shape, traces=True, tc_trace=20.0
@@ -131,6 +133,7 @@ class LIF_Network(Network):
         tc_theta_decay: float = 1e7,
         inpt_shape: Optional[Iterable[int]] = None,
         update_rule: Optional[LearningRule] = PostPre,
+        batch_size: int = 1,
     ) -> None:
         # language=rst
         """
@@ -161,6 +164,7 @@ class LIF_Network(Network):
         self.n_neurons = n_neurons
         self.inh = inh
         self.dt = dt
+        self.batch_size = batch_size
 
         input_layer = Input(
             n=self.n_inpt, shape=self.inpt_shape, traces=True, tc_trace=20.0
@@ -232,6 +236,7 @@ class SRM0_Network(Network):
         tc_theta_decay: float = 1e7,
         inpt_shape: Optional[Iterable[int]] = None,
         update_rule: Optional[LearningRule] = PostPre,
+        batch_size: int = 1,
     ) -> None:
         # language=rst
         """
@@ -262,6 +267,7 @@ class SRM0_Network(Network):
         self.n_neurons = n_neurons
         self.inh = inh
         self.dt = dt
+        self.batch_size = batch_size
 
         input_layer = Input(
             n=self.n_inpt, shape=self.inpt_shape, traces=True, tc_trace=20.0
@@ -333,6 +339,7 @@ class DiehlAndCook_Network(Network):
         tc_theta_decay: float = 1e7,
         inpt_shape: Optional[Iterable[int]] = None,
         update_rule: Optional[LearningRule] = PostPre,
+        batch_size: int = 1,
     ) -> None:
         # language=rst
         """
@@ -363,6 +370,7 @@ class DiehlAndCook_Network(Network):
         self.n_neurons = n_neurons
         self.inh = inh
         self.dt = dt
+        self.batch_size = batch_size
 
         input_layer = Input(
             n=self.n_inpt, shape=self.inpt_shape, traces=True, tc_trace=20.0
