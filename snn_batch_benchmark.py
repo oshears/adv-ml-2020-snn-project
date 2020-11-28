@@ -339,7 +339,7 @@ print("Progress: %d / %d (%.4f seconds)" % (epoch + 1, n_epochs, t() - start))
 print("Training complete.\n")
 
 # save network
-filename = "./networks/snn_" + encoding + "_" + neuron_model + "_" + update_rule + ".pt"
+filename = "./networks/snn_" + str(encoding) + "_" + str(neuron_model) + "_" + str(update_rule) + ".pt"
 network.save(filename)
 
 # Load MNIST data.
