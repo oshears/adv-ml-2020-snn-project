@@ -326,6 +326,10 @@ for epoch in range(n_epochs):
 print("Progress: %d / %d (%.4f seconds)" % (epoch + 1, n_epochs, t() - start))
 print("Training complete.\n")
 
+# save network
+filename = "snn_" + encoding + "_" + neuron_model + "_" + update_rule + ".pt"
+network.save(filename)
+
 # Load MNIST data.
 test_dataset = MNIST(
     PoissonEncoder(time=time, dt=dt),
