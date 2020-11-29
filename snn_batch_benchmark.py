@@ -310,16 +310,40 @@ filename = "./networks/snn_" + str(encoding) + "_" + str(neuron_model) + "_" + s
 network.save(filename)
 
 # Load MNIST data.
-test_dataset = MNIST(
-    PoissonEncoder(time=time, dt=dt),
-    None,
-    root=os.path.join(ROOT_DIR, "data", "MNIST"),
-    download=True,
-    train=False,
-    transform=transforms.Compose(
-        [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
-    ),
-)
+test_dataset = None
+if encoding == "Poisson":
+    test_dataset = MNIST(
+        PoissonEncoder(time=time, dt=dt),
+        None,
+        root=os.path.join(ROOT_DIR, "data", "MNIST"),
+        download=True,
+        train=False,
+        transform=transforms.Compose(
+            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
+        ),
+    )
+elif encoding == "Bernoulli":
+    test_dataset = MNIST(
+        BernoulliEncoder(time=time, dt=dt),
+        None,
+        root=os.path.join(ROOT_DIR, "data", "MNIST"),
+        download=True,
+        train=False,
+        transform=transforms.Compose(
+            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
+        ),
+    )
+else:
+    test_dataset = MNIST(
+        RankOrderEncoder(time=time, dt=dt),
+        None,
+        root=os.path.join(ROOT_DIR, "data", "MNIST"),
+        download=True,
+        train=False,
+        transform=transforms.Compose(
+            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
+        ),
+    )
 
 # Create a dataloader to iterate and batch data
 test_dataloader = DataLoader(
