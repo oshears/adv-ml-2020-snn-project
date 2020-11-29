@@ -339,7 +339,7 @@ print("Progress: %d / %d (%.4f seconds)" % (epoch + 1, n_epochs, t() - start))
 print("Training complete.\n")
 
 # save network
-filename = "./networks/snn_" + str(encoding) + "_" + str(neuron_model) + "_" + str(update_rule) + ".pt"
+filename = "./networks/snn_" + str(encoding) + "_" + str(neuron_model) + "_" + str(args.update_rule) + ".pt"
 network.save(filename)
 
 # Load MNIST data.
@@ -357,7 +357,8 @@ test_dataset = MNIST(
 # Create a dataloader to iterate and batch data
 test_dataloader = DataLoader(
     test_dataset,
-    batch_size=256,
+    # batch_size=256,
+    batch_size=batch_size,
     shuffle=True,
     num_workers=n_workers,
     pin_memory=gpu,
