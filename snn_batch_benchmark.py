@@ -2,7 +2,6 @@ import os
 import torch
 import argparse
 import numpy as np
-import matplotlib.pyplot as plt
 
 from torchvision import transforms
 from tqdm import tqdm
@@ -15,7 +14,6 @@ from bindsnet.encoding import PoissonEncoder, BernoulliEncoder, RankOrderEncoder
 from bindsnet.learning import PostPre, WeightDependentPostPre, Hebbian
 from bindsnet.evaluation import all_activity, proportion_weighting, assign_labels
 from bindsnet.network.monitors import Monitor
-from bindsnet.utils import get_square_weights, get_square_assignments
 from bindsnet.analysis.plotting import (
     plot_input,
     plot_spikes,
@@ -303,33 +301,6 @@ for epoch in range(n_epochs):
         # Get voltage recording.
         exc_voltages = exc_voltage_monitor.get("v")
 
-        # Optionally plot various simulation information.
-        if plot:
-            image = batch["image"][:, 0].view(28, 28)
-            inpt = inputs["X"][:, 0].view(time, 784).sum(0).view(28, 28)
-            input_exc_weights = network.connections[("X", "Y")].w
-            square_weights = get_square_weights(
-                input_exc_weights.view(784, n_neurons), n_sqrt, 28
-            )
-            square_assignments = get_square_assignments(assignments, n_sqrt)
-            spikes_ = {
-                layer: spikes[layer].get("s")[:, 0].contiguous() for layer in spikes
-            }
-            voltages = {"Y": exc_voltages}
-
-            inpt_axes, inpt_ims = plot_input(
-                image, inpt, label=labels[step], axes=inpt_axes, ims=inpt_ims
-            )
-            spike_ims, spike_axes = plot_spikes(spikes_, ims=spike_ims, axes=spike_axes)
-            weights_im = plot_weights(square_weights, im=weights_im)
-            assigns_im = plot_assignments(square_assignments, im=assigns_im)
-            perf_ax = plot_performance(accuracy, ax=perf_ax)
-            voltage_ims, voltage_axes = plot_voltages(
-                voltages, ims=voltage_ims, axes=voltage_axes, plot_type="line"
-            )
-
-            plt.pause(1e-8)
-
         network.reset_state_variables()  # Reset state variables.
 
         if step % update_steps == 0 and step > 0:
@@ -372,7 +343,6 @@ print("\nBegin testing\n")
 network.train(mode=False)
 start = t()
 
-pbar = tqdm(total=n_test)
 for step, batch in enumerate(test_dataset):
     if step > n_test:
         break
@@ -408,8 +378,6 @@ for step, batch in enumerate(test_dataset):
     )
 
     network.reset_state_variables()  # Reset state variables.
-    pbar.set_description_str("Test progress: ")
-    pbar.update()
 
 print("\nAll activity accuracy: %.2f" % (accuracy["all"] / n_test))
 print("Proportion weighting accuracy: %.2f \n" % (accuracy["proportion"] / n_test))
