@@ -299,7 +299,9 @@ print("Training complete.\n")
 
 # Load MNIST data.
 test_dataset = MNIST(
-    PoissonEncoder(time=time, dt=dt),
+    # PoissonEncoder(time=time, dt=dt),
+    BernoulliEncoder(time=time, dt=dt),
+    # RankOrderEncoder(time=time, dt=dt),
     None,
     root=os.path.join(ROOT_DIR, "data", "MNIST"),
     download=True,
