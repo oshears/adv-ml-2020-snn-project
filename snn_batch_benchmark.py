@@ -34,7 +34,7 @@ parser.add_argument("--n_epochs", type=int, default=1)
 parser.add_argument("--n_test", type=int, default=10000)
 parser.add_argument("--n_train", type=int, default=60000)
 parser.add_argument("--n_workers", type=int, default=-1)
-parser.add_argument("--update_steps", type=int, default=256)
+parser.add_argument("--update_steps", type=int, default=100)
 parser.add_argument("--exc", type=float, default=22.5)
 parser.add_argument("--inh", type=float, default=120)
 parser.add_argument("--theta_plus", type=float, default=0.05)
@@ -73,6 +73,7 @@ plot = args.plot
 gpu = args.gpu
 
 # OYS Added
+print("")
 print("Encoding Scheme:",args.encoding)
 print("Neural Model:",args.neuron_model)
 print("Learning Technique:",args.update_rule)
@@ -209,10 +210,6 @@ epoch = 0
 for epoch in range(n_epochs):
     labels = []
 
-    if epoch % progress_interval == 0:
-        print("Progress: %d / %d (%.4f seconds)" % (epoch, n_epochs, t() - start))
-        start = t()
-
     # Create a dataloader to iterate and batch data
     train_dataloader = DataLoader(
         dataset,
@@ -222,9 +219,11 @@ for epoch in range(n_epochs):
         pin_memory=gpu,
     )
 
-    for step, batch in enumerate(tqdm(train_dataloader)):
+    for step, batch in enumerate(train_dataloader):
+
         if step > n_train:
             break
+        
         # Get next input sample.
         inputs = {"X": batch["encoded_image"]}
         if gpu:
@@ -303,9 +302,6 @@ for epoch in range(n_epochs):
 
         network.reset_state_variables()  # Reset state variables.
 
-        if step % update_steps == 0 and step > 0:
-            break
-
 print("Progress: %d / %d (%.4f seconds)" % (epoch + 1, n_epochs, t() - start))
 print("Training complete.\n")
 
@@ -328,8 +324,7 @@ test_dataset = MNIST(
 # Create a dataloader to iterate and batch data
 test_dataloader = DataLoader(
     test_dataset,
-    # batch_size=256,
-    batch_size=batch_size,
+    batch_size=256,
     shuffle=True,
     num_workers=n_workers,
     pin_memory=gpu,
