@@ -169,7 +169,7 @@ for step, batch in enumerate(train_dataloader):
         print("Progress:",step*batch_size,"/",n_train)
 
         # Assign labels to excitatory layer neurons.
-        assignments, proportions, rates = assign_labels( pikes=spike_record, labels=label_tensor, n_labels=n_classes, rates=rates,
+        assignments, proportions, rates = assign_labels( spikes=spike_record, labels=label_tensor, n_labels=n_classes, rates=rates,
         )
 
         labels = []
