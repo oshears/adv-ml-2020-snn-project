@@ -103,21 +103,7 @@ elif neuron_model == "LIF":
 elif neuron_model == "SRM0":
     network = SRM0_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
 else:
-    network = DiehlAndCook_3L_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
-    '''
-    from bindsnet.models import DiehlAndCook2015
-    network = DiehlAndCook2015(
-        n_inpt=784,
-        n_neurons=n_neurons,
-        exc=exc,
-        inh=inh,
-        dt=dt,
-        norm=78.4,
-        nu=(1e-4, 1e-2),
-        theta_plus=theta_plus,
-        inpt_shape=(1, 28, 28),
-    )
-    '''
+    network = DiehlAndCook_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
 
 # Directs network to GPU
 if gpu:
@@ -386,8 +372,10 @@ for step, batch in enumerate(test_dataset):
     )
 
     network.reset_state_variables()  # Reset state variables.
-
-    print("Progress:",step*256,"/",n_train)
+    if step % update_steps == 0 and step > 0:
+        print("\nAll activity accuracy: %.2f" % (accuracy["all"] / n_test))
+        print("Proportion weighting accuracy: %.2f \n" % (accuracy["proportion"] / n_test))
+        print("Progress:",step*256,"/",n_train)
 
 print("\nAll activity accuracy: %.2f" % (accuracy["all"] / n_test))
 print("Proportion weighting accuracy: %.2f \n" % (accuracy["proportion"] / n_test))
