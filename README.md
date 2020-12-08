@@ -12,6 +12,12 @@ The goal of this project was to create several spiking neural network models usi
   - Directory that contains the generated SNNs used to perform the classification task. Each model name has the encoding scheme, neuron model, and learning rule used to train it.
 - `./data`
   - Directory that contains the downloaded MNIST training and testing data
+- `./documentation`
+  - Directory that contains Jupyter Notebooks to document our process of learning the BindsNET framework
+  - The `BindsNET_Network_Demo.ipynb` provides details about how to construct a network in BindsNET used
+  - The `BindsNET_Encoder_Demo.ipynb` provides information about various encoding schemes used
+  - The `BindsNET_Neuron_Demo.ipynb` provides details about various neuron models used
+  - The `BindsNET_Learning_Demo.ipynb` provides information about various learning rules used
 - `ann_benchmark.py`
   - Python file used to benchmark the performance of the 784-100 artificial neural network using stoachstic gradient descent
 - `snn_benchmark.py`
