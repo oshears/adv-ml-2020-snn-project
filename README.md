@@ -1,6 +1,6 @@
 #  Spiking Neural Networks for Image Classification
 ## CS 5824/ECE 5424 Project Repository
-This repository contains the code used in our CS 5824/ ECE 5424 project.
+This repository contains the code used in our CS 5824/ ECE 5424 project: Spiking Neural Networks for Image Classification. The goal of this project was to create several spiking neural network models using [Diehl and Cook's (2015)](https://www.frontiersin.org/articles/10.3389/fncom.2015.00099/full) architecure to benchmark their accuracy when classifying images from the MNIST dataset. The models created utilized various encoding schemes, neuron models, and learning rules to perform this task.
 
 ## Repository Setup
 - Models
@@ -37,8 +37,8 @@ To install PyTorch, use the following command:
 ```python ann_benchmark.py```
 
 ## Contributors
-- Osaze Shears [email](oshears@vt.edu)
-- Ahmadhossein Yazdani [email](ahmadyazdani@vt.edu)
+- Osaze Shears ([email](oshears@vt.edu))
+- Ahmadhossein Yazdani ([email](ahmadyazdani@vt.edu))
 
 ## References
 > Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., ... & Desmaison, A. (2019). Pytorch: An imperative style, high-performance deep learning library. In Advances in neural information processing systems (pp. 8026-8037).
