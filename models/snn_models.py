@@ -15,13 +15,12 @@ class RecurrentNetwork(Network):
         batch_size: int = 1,
         input_shape: Optional[Iterable[int]] = None,
     ) -> None:
+
         super().__init__(batch_size=batch_size)
 
         n_neurons = 100
 
-        input_layer = Input(
-            n=n_inputs, shape=input_shape, traces=True, tc_trace=20.0
-        )
+        input_layer = Input( n=n_inputs, shape=input_shape, traces=True, tc_trace=20.0 )
         self.add_layer(input_layer, name="X")
 
         self.add_layer(output_layer, name="Y")
