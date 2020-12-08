@@ -110,7 +110,7 @@ class SRM0_Network(RecurrentNetwork):
 
         super().__init__(n_inputs=n_inputs,output_layer=output_layer,input_shape=input_shape,update_rule=update_rule,batch_size=batch_size)
 
-class DiehlAndCook_Network(Network):
+class DiehlAndCook_Network(RecurrentNetwork):
     def __init__(
         self,
         n_inputs: int,
