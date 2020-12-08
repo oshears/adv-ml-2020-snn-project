@@ -274,6 +274,8 @@ for epoch in range(n_epochs):
                 )
             )
 
+            print("Progress:",step*batch_size,"/",n_train)
+
             # Assign labels to excitatory layer neurons.
             assignments, proportions, rates = assign_labels(
                 spikes=spike_record,
