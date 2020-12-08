@@ -27,50 +27,28 @@ from bindsnet.analysis.plotting import (
 from models.snn_models import IF_Network, LIF_Network, SRM0_Network, DiehlAndCook_Network, IF_3L_Network, LIF_3L_Network, SRM0_3L_Network, DiehlAndCook_3L_Network
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--seed", type=int, default=0)
-parser.add_argument("--n_neurons", type=int, default=100)
-parser.add_argument("--batch_size", type=int, default=64)
-parser.add_argument("--n_epochs", type=int, default=1)
-parser.add_argument("--n_test", type=int, default=10000)
-parser.add_argument("--n_train", type=int, default=60000)
-parser.add_argument("--n_workers", type=int, default=-1)
-parser.add_argument("--update_steps", type=int, default=100)
-parser.add_argument("--exc", type=float, default=22.5)
-parser.add_argument("--inh", type=float, default=120)
-parser.add_argument("--theta_plus", type=float, default=0.05)
-parser.add_argument("--time", type=int, default=100)
-parser.add_argument("--dt", type=int, default=1.0)
-parser.add_argument("--intensity", type=float, default=128)
-parser.add_argument("--progress_interval", type=int, default=10)
 parser.add_argument("--encoding", type=str, default="Poisson")
 parser.add_argument("--neuron_model", type=str, default="IF")
 parser.add_argument("--update_rule", type=str, default="PostPre")
-parser.add_argument("--train", dest="train", action="store_true")
-parser.add_argument("--test", dest="train", action="store_false")
-parser.add_argument("--plot", dest="plot", action="store_true")
-parser.add_argument("--gpu", dest="gpu", action="store_true")
-parser.set_defaults(plot=False, gpu=False)
 
 args = parser.parse_args()
 
-seed = args.seed
-n_neurons = args.n_neurons
-batch_size = args.batch_size
-n_epochs = args.n_epochs
-n_test = args.n_test
-n_train = args.n_train
-n_workers = args.n_workers
-update_steps = args.update_steps
-exc = args.exc
-inh = args.inh
-theta_plus = args.theta_plus
-time = args.time
-dt = args.dt
-intensity = args.intensity
-progress_interval = args.progress_interval
-train = args.train
-plot = args.plot
-gpu = args.gpu
+seed = 0
+n_neurons = 100
+batch_size = 64
+n_epochs = 1
+n_test = 10000
+n_train = 60000
+n_workers = 16
+update_steps = 100
+exc = 22.5
+inh = 120
+theta_plus = 0.05
+time = 100
+dt = 1
+intensity = 128
+progress_interval = 10
+gpu = True
 
 # OYS Added
 print("")
@@ -85,7 +63,7 @@ if args.update_rule == "PostPre":
     update_rule = PostPre
 elif args.update_rule == "WeightDependentPostPre":
     update_rule = WeightDependentPostPre
-else:
+elif args.update_rule == "Hebbian":
     update_rule = Hebbian
 
 update_interval = update_steps * batch_size
@@ -125,7 +103,19 @@ elif neuron_model == "LIF":
 elif neuron_model == "SRM0":
     network = SRM0_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
 else:
-    network = DiehlAndCook_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
+    #network = DiehlAndCook_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
+    from bindsnet.models import DiehlAndCook2015
+    network = DiehlAndCook2015(
+        n_inpt=784,
+        n_neurons=n_neurons,
+        exc=exc,
+        inh=inh,
+        dt=dt,
+        norm=78.4,
+        nu=(1e-4, 1e-2),
+        theta_plus=theta_plus,
+        inpt_shape=(1, 28, 28),
+    )
 
 # Directs network to GPU
 if gpu:
@@ -153,7 +143,7 @@ elif encoding == "Bernoulli":
             [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
         ),
     )
-else:
+elif encoding == "RankOrder":
     dataset = MNIST(
         RankOrderEncoder(time=time, dt=dt),
         None,
@@ -173,10 +163,6 @@ rates = torch.zeros((n_neurons, n_classes), device=device)
 
 # Sequence of accuracy estimates.
 accuracy = {"all": [], "proportion": []}
-
-# Voltage recording for excitatory and inhibitory layers.
-exc_voltage_monitor = Monitor(network.layers["Y"], ["v"], time=int(time / dt))
-network.add_monitor(exc_voltage_monitor, name="exc_voltage")
 
 # Set up monitors for spikes and voltages
 spikes = {}
@@ -292,15 +278,13 @@ for epoch in range(n_epochs):
         network.run(inputs=inputs, time=time, input_time_dim=1)
 
         # Add to spikes recording.
-        s = spikes["Y"].get("s").permute((1, 0, 2))
+        #s = spikes["Y"].get("s").permute((1, 0, 2))
+        s = spikes["Ae"].get("s").permute((1, 0, 2))
         spike_record[
             (step * batch_size)
             % update_interval : (step * batch_size % update_interval)
             + s.size(0)
         ] = s
-
-        # Get voltage recording.
-        exc_voltages = exc_voltage_monitor.get("v")
 
         network.reset_state_variables()  # Reset state variables.
 
@@ -335,7 +319,7 @@ elif encoding == "Bernoulli":
             [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
         ),
     )
-else:
+elif encoding == "RankOrder":
     test_dataset = MNIST(
         RankOrderEncoder(time=time, dt=dt),
         None,
@@ -376,7 +360,8 @@ for step, batch in enumerate(test_dataset):
     network.run(inputs=inputs, time=time, input_time_dim=1)
 
     # Add to spikes recording.
-    spike_record = spikes["Y"].get("s").permute((1, 0, 2))
+    # spike_record = spikes["Y"].get("s").permute((1, 0, 2))
+    spike_record = spikes["Ae"].get("s").permute((1, 0, 2))
 
     # Convert the array of labels into a tensor
     label_tensor = torch.tensor(batch["label"], device=device)
