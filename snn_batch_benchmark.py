@@ -119,13 +119,13 @@ start_intensity = intensity
 # Build network.
 network = None
 if neuron_model == "IF":
-    network = IF_3L_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
+    network = IF_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
 elif neuron_model == "LIF":
-    network = LIF_3L_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
+    network = LIF_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
 elif neuron_model == "SRM0":
-    network = SRM0_3L_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
+    network = SRM0_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
 else:
-    network = DiehlAndCook_3L_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
+    network = DiehlAndCook_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(0.0064,0.64))
 
 # Directs network to GPU
 if gpu:
