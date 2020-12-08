@@ -4,8 +4,12 @@ This repository contains the code used in our CS 5824/ ECE 5424 project: Spiking
 
 ## Repository Setup
 - Models
+  - Contains the snn_models.py file
 - Networks
-- 
+  - Contains the generated SNNs used to perform the classification task. Each model name has the encoding scheme, neuron model, and learning rule used to train it.
+- ann_benchmark.py
+- snn_benchmark.py
+- snn_benchmark.sh
 
 ## Dependencies
 Several external packages need to be installed in order for this project to run successfully. Each of these packages is noted below.
