@@ -137,7 +137,7 @@ if encoding == "Poisson":
     dataset = MNIST(
         PoissonEncoder(time=time, dt=dt),
         None,
-        root=os.path.join(ROOT_DIR, "data", "MNIST"),
+        root=os.path.join(".", "data", "MNIST"),
         download=True,
         transform=transforms.Compose(
             [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
