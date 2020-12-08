@@ -103,7 +103,8 @@ elif neuron_model == "LIF":
 elif neuron_model == "SRM0":
     network = SRM0_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
 else:
-    #network = DiehlAndCook_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
+    network = DiehlAndCook_3L_Network(n_inpt=784,update_rule=update_rule,inpt_shape=(1, 28, 28),batch_size=batch_size,nu=(1e-4, 1e-2))
+    '''
     from bindsnet.models import DiehlAndCook2015
     network = DiehlAndCook2015(
         n_inpt=784,
@@ -116,6 +117,7 @@ else:
         theta_plus=theta_plus,
         inpt_shape=(1, 28, 28),
     )
+    '''
 
 # Directs network to GPU
 if gpu:
@@ -147,7 +149,7 @@ elif encoding == "RankOrder":
     dataset = MNIST(
         RankOrderEncoder(time=time, dt=dt),
         None,
-        root=os.path.join(ROOT_DIR, "data", "MNIST"),
+        root=os.path.join(".","data", "MNIST"),
         download=True,
         transform=transforms.Compose(
             [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
@@ -278,8 +280,8 @@ for epoch in range(n_epochs):
         network.run(inputs=inputs, time=time, input_time_dim=1)
 
         # Add to spikes recording.
-        #s = spikes["Y"].get("s").permute((1, 0, 2))
-        s = spikes["Ae"].get("s").permute((1, 0, 2))
+        s = spikes["Y"].get("s").permute((1, 0, 2))
+        # s = spikes["Ae"].get("s").permute((1, 0, 2))
         spike_record[
             (step * batch_size)
             % update_interval : (step * batch_size % update_interval)
@@ -336,7 +338,7 @@ test_dataloader = DataLoader(
     test_dataset,
     batch_size=256,
     shuffle=False,
-    num_workers=32,
+    num_workers=16,
     pin_memory=gpu,
 )
 
@@ -360,8 +362,8 @@ for step, batch in enumerate(test_dataset):
     network.run(inputs=inputs, time=time, input_time_dim=1)
 
     # Add to spikes recording.
-    # spike_record = spikes["Y"].get("s").permute((1, 0, 2))
-    spike_record = spikes["Ae"].get("s").permute((1, 0, 2))
+    spike_record = spikes["Y"].get("s").permute((1, 0, 2))
+    # spike_record = spikes["Ae"].get("s").permute((1, 0, 2))
 
     # Convert the array of labels into a tensor
     label_tensor = torch.tensor(batch["label"], device=device)
@@ -384,6 +386,8 @@ for step, batch in enumerate(test_dataset):
     )
 
     network.reset_state_variables()  # Reset state variables.
+
+    print("Progress:",step*256,"/",n_train)
 
 print("\nAll activity accuracy: %.2f" % (accuracy["all"] / n_test))
 print("Proportion weighting accuracy: %.2f \n" % (accuracy["proportion"] / n_test))
