@@ -1,13 +1,11 @@
 import torch
 import torchvision
-import torch.nn as nn
-import torch.nn.functional as F
-
 import numpy as np
 
 
 from datetime import datetime
 
+from models.ann_models import ANN_Model
 
 class ToTensor(object):
     """Convert PIL Images in sample to pytorch Tensors."""
@@ -29,34 +27,16 @@ test_loader = torch.utils.data.DataLoader(test_set, batch_size=32, shuffle=False
 
 classes = train_set.classes
 
-class Model(nn.Module):
-    def __init__(self, class_num, act=F.relu):
-        super(Model, self).__init__()
-
-
-        self.layer1 = nn.Linear(1 * 28 * 28, 1 * 100)
-        self.act1 = act
-
-
-    def forward(self, x):
-
-        x = x.view(x.size(0), -1)
-
-        x = self.layer1(x)
-        x = self.act1(x)
-
-        return x
-
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 print(device)
 
-model = Model(len(classes))
+model = ANN_Model(len(classes))
 
 model = model.to(device)
 
 learning_rate = 0.01
-criterion = nn.CrossEntropyLoss()
+criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 def fit(model, train_loader, device, criterion, optimizer, num_epochs=1):

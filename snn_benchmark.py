@@ -17,9 +17,10 @@ from bindsnet.network.monitors import Monitor
 import os
 import argparse
 
-
 # import local modules
 from models.snn_models import IF_Network, LIF_Network, SRM0_Network, DiehlAndCook_Network
+
+
 
 # create an argument parser to interpret command line arguments
 parser = argparse.ArgumentParser()
