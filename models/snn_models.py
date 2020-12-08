@@ -1,4 +1,4 @@
-from typing import Optional, Union, Sequence, Iterable
+from typing import Optional, Iterable
 
 import torch
 from bindsnet.learning import LearningRule, PostPre
