@@ -24,7 +24,7 @@ from bindsnet.analysis.plotting import (
 )
 
 # OYS Added
-from models.snn_models import IF_Network, LIF_Network, SRM0_Network, DiehlAndCook_Network, IF_3L_Network, LIF_3L_Network, SRM0_3L_Network, DiehlAndCook_3L_Network
+from models.snn_models import IF_Network, LIF_Network, SRM0_Network, DiehlAndCook_Network
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--encoding", type=str, default="Poisson")
@@ -56,9 +56,19 @@ print("Encoding Scheme:",args.encoding)
 print("Neural Model:",args.neuron_model)
 print("Learning Technique:",args.update_rule)
 encoding = args.encoding
-neuron_model = args.neuron_model
-update_rule = None
 
+encoder = None
+if args.encoding == "Poisson":
+    encoder = PoissonEncoder(time=time,dt=dt)
+if args.encoding == "Bernoulli":
+    encoder = BernoulliEncoder(time=time,dt=dt)
+if args.encoding == "RankOrder":
+    encoder = RankOrderEncoder(time=time,dt=dt)
+
+neuron_model = args.neuron_model
+
+# determine update rule
+update_rule = None
 if args.update_rule == "PostPre":
     update_rule = PostPre
 elif args.update_rule == "WeightDependentPostPre":
@@ -89,9 +99,6 @@ if n_workers == -1:
 n_sqrt = int(np.ceil(np.sqrt(n_neurons)))
 start_intensity = intensity
 
-# determine update rule
-
-
 
 
 # Build network.
@@ -110,37 +117,15 @@ if gpu:
     network.to("cuda")
 
 # Load MNIST data.
-dataset = None
-if encoding == "Poisson":
-    dataset = MNIST(
-        PoissonEncoder(time=time, dt=dt),
-        None,
-        root=os.path.join(".", "data", "MNIST"),
-        download=True,
-        transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
-        ),
-    )
-elif encoding == "Bernoulli":
-    dataset = MNIST(
-        BernoulliEncoder(time=time, dt=dt),
-        None,
-        root=os.path.join(ROOT_DIR, "data", "MNIST"),
-        download=True,
-        transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
-        ),
-    )
-elif encoding == "RankOrder":
-    dataset = MNIST(
-        RankOrderEncoder(time=time, dt=dt),
-        None,
-        root=os.path.join(".","data", "MNIST"),
-        download=True,
-        transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
-        ),
-    )
+dataset = MNIST(
+    encoder,
+    None,
+    root=os.path.join(".", "data", "MNIST"),
+    download=True,
+    transform=transforms.Compose(
+        [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
+    ),
+)
 
 
 # Neuron assignments and spike proportions.
@@ -180,103 +165,96 @@ spike_record = torch.zeros((update_interval, int(time / dt), n_neurons), device=
 print("\nBegin training.\n")
 start = t()
 
-epoch = 0
-for epoch in range(n_epochs):
-    labels = []
+labels = []
 
-    # Create a dataloader to iterate and batch data
-    train_dataloader = DataLoader(
-        dataset,
-        batch_size=batch_size,
-        shuffle=True,
-        num_workers=n_workers,
-        pin_memory=gpu,
-    )
+# Create a dataloader to iterate and batch data
+train_dataloader = DataLoader(
+    dataset,
+    batch_size=batch_size,
+    shuffle=True,
+    num_workers=n_workers,
+    pin_memory=gpu,
+)
 
-    for step, batch in enumerate(train_dataloader):
+for step, batch in enumerate(train_dataloader):
 
-        if step > n_train:
-            break
-        
-        # Get next input sample.
-        inputs = {"X": batch["encoded_image"]}
-        if gpu:
-            inputs = {k: v.cuda() for k, v in inputs.items()}
+    # Get next input sample.
+    inputs = {"X": batch["encoded_image"]}
+    if gpu:
+        inputs = {k: v.cuda() for k, v in inputs.items()}
 
-        if step % update_steps == 0 and step > 0:
-            # Convert the array of labels into a tensor
-            label_tensor = torch.tensor(labels, device=device)
+    if step % update_steps == 0 and step > 0:
+        # Convert the array of labels into a tensor
+        label_tensor = torch.tensor(labels, device=device)
 
-            # Get network predictions.
-            all_activity_pred = all_activity(
-                spikes=spike_record, assignments=assignments, n_labels=n_classes
+        # Get network predictions.
+        all_activity_pred = all_activity(
+            spikes=spike_record, assignments=assignments, n_labels=n_classes
+        )
+        proportion_pred = proportion_weighting(
+            spikes=spike_record,
+            assignments=assignments,
+            proportions=proportions,
+            n_labels=n_classes,
+        )
+
+        # Compute network accuracy according to available classification strategies.
+        accuracy["all"].append(
+            100
+            * torch.sum(label_tensor.long() == all_activity_pred).item()
+            / len(label_tensor)
+        )
+        accuracy["proportion"].append(
+            100
+            * torch.sum(label_tensor.long() == proportion_pred).item()
+            / len(label_tensor)
+        )
+
+        print(
+            "\nAll activity accuracy: %.2f (last), %.2f (average), %.2f (best)"
+            % (
+                accuracy["all"][-1],
+                np.mean(accuracy["all"]),
+                np.max(accuracy["all"]),
             )
-            proportion_pred = proportion_weighting(
-                spikes=spike_record,
-                assignments=assignments,
-                proportions=proportions,
-                n_labels=n_classes,
+        )
+        print(
+            "Proportion weighting accuracy: %.2f (last), %.2f (average), %.2f"
+            " (best)\n"
+            % (
+                accuracy["proportion"][-1],
+                np.mean(accuracy["proportion"]),
+                np.max(accuracy["proportion"]),
             )
+        )
 
-            # Compute network accuracy according to available classification strategies.
-            accuracy["all"].append(
-                100
-                * torch.sum(label_tensor.long() == all_activity_pred).item()
-                / len(label_tensor)
-            )
-            accuracy["proportion"].append(
-                100
-                * torch.sum(label_tensor.long() == proportion_pred).item()
-                / len(label_tensor)
-            )
+        print("Progress:",step*batch_size,"/",n_train)
 
-            print(
-                "\nAll activity accuracy: %.2f (last), %.2f (average), %.2f (best)"
-                % (
-                    accuracy["all"][-1],
-                    np.mean(accuracy["all"]),
-                    np.max(accuracy["all"]),
-                )
-            )
-            print(
-                "Proportion weighting accuracy: %.2f (last), %.2f (average), %.2f"
-                " (best)\n"
-                % (
-                    accuracy["proportion"][-1],
-                    np.mean(accuracy["proportion"]),
-                    np.max(accuracy["proportion"]),
-                )
-            )
+        # Assign labels to excitatory layer neurons.
+        assignments, proportions, rates = assign_labels(
+            spikes=spike_record,
+            labels=label_tensor,
+            n_labels=n_classes,
+            rates=rates,
+        )
 
-            print("Progress:",step*batch_size,"/",n_train)
+        labels = []
 
-            # Assign labels to excitatory layer neurons.
-            assignments, proportions, rates = assign_labels(
-                spikes=spike_record,
-                labels=label_tensor,
-                n_labels=n_classes,
-                rates=rates,
-            )
+    labels.extend(batch["label"].tolist())
 
-            labels = []
+    # Run the network on the input.
+    network.run(inputs=inputs, time=time, input_time_dim=1)
 
-        labels.extend(batch["label"].tolist())
+    # Add to spikes recording.
+    s = spikes["Y"].get("s").permute((1, 0, 2))
+    spike_record[
+        (step * batch_size)
+        % update_interval : (step * batch_size % update_interval)
+        + s.size(0)
+    ] = s
 
-        # Run the network on the input.
-        network.run(inputs=inputs, time=time, input_time_dim=1)
+    network.reset_state_variables()  # Reset state variables.
 
-        # Add to spikes recording.
-        s = spikes["Y"].get("s").permute((1, 0, 2))
-        # s = spikes["Ae"].get("s").permute((1, 0, 2))
-        spike_record[
-            (step * batch_size)
-            % update_interval : (step * batch_size % update_interval)
-            + s.size(0)
-        ] = s
-
-        network.reset_state_variables()  # Reset state variables.
-
-print("Progress: %d / %d (%.4f seconds)" % (epoch + 1, n_epochs, t() - start))
 print("Training complete.\n")
 
 # save network
@@ -284,40 +262,16 @@ filename = "./networks/snn_" + str(encoding) + "_" + str(neuron_model) + "_" + s
 network.save(filename)
 
 # Load MNIST data.
-test_dataset = None
-if encoding == "Poisson":
-    test_dataset = MNIST(
-        PoissonEncoder(time=time, dt=dt),
-        None,
-        root=os.path.join(ROOT_DIR, "data", "MNIST"),
-        download=True,
-        train=False,
-        transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
-        ),
-    )
-elif encoding == "Bernoulli":
-    test_dataset = MNIST(
-        BernoulliEncoder(time=time, dt=dt),
-        None,
-        root=os.path.join(ROOT_DIR, "data", "MNIST"),
-        download=True,
-        train=False,
-        transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
-        ),
-    )
-elif encoding == "RankOrder":
-    test_dataset = MNIST(
-        RankOrderEncoder(time=time, dt=dt),
-        None,
-        root=os.path.join(ROOT_DIR, "data", "MNIST"),
-        download=True,
-        train=False,
-        transform=transforms.Compose(
-            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
-        ),
-    )
+test_dataset = MNIST(
+                        encoder,
+                        None,
+                        root=os.path.join(".", "data", "MNIST"),
+                        download=True,
+                        train=False,
+                        transform=transforms.Compose(
+                            [transforms.ToTensor(), transforms.Lambda(lambda x: x * intensity)]
+                        ),
+                    )
 
 # Create a dataloader to iterate and batch data
 test_dataloader = DataLoader(
@@ -336,9 +290,8 @@ print("\nBegin testing\n")
 network.train(mode=False)
 start = t()
 
-for step, batch in enumerate(test_dataset):
-    if step > n_test:
-        break
+for step, batch in enumerate(test_dataloader):
+
     # Get next input sample.
     inputs = {"X": batch["encoded_image"]}
     if gpu:
@@ -349,7 +302,6 @@ for step, batch in enumerate(test_dataset):
 
     # Add to spikes recording.
     spike_record = spikes["Y"].get("s").permute((1, 0, 2))
-    # spike_record = spikes["Ae"].get("s").permute((1, 0, 2))
 
     # Convert the array of labels into a tensor
     label_tensor = torch.tensor(batch["label"], device=device)
@@ -380,5 +332,4 @@ for step, batch in enumerate(test_dataset):
 print("\nAll activity accuracy: %.2f" % (accuracy["all"] / n_test))
 print("Proportion weighting accuracy: %.2f \n" % (accuracy["proportion"] / n_test))
 
-print("Progress: %d / %d (%.4f seconds)" % (epoch + 1, n_epochs, t() - start))
 print("Testing complete.\n")
