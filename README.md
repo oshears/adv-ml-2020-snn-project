@@ -3,16 +3,16 @@
 This repository contains the code used in our CS 5824/ ECE 5424 project: Spiking Neural Networks for Image Classification. The goal of this project was to create several spiking neural network models using [Diehl and Cook's (2015)](https://www.frontiersin.org/articles/10.3389/fncom.2015.00099/full) architecure to benchmark their accuracy when classifying images from the MNIST dataset. The models created utilized various encoding schemes, neuron models, and learning rules to perform this task.
 
 ## Repository Setup
-- Models
+- `models`
   - Directory that contains the `ann_models.py` file where the 784-100 artificial neural network model is defined
   - Directory that contains the `snn_models.py` file where various versions of the 784-100 spiking neural network model are defined
-- Networks
+- `networks`
   - Contains the generated SNNs used to perform the classification task. Each model name has the encoding scheme, neuron model, and learning rule used to train it.
-- ann_benchmark.py
+- `ann_benchmark.py`
   - Python file used to benchmark the performance of the 784-100 artificial neural network using stoachstic gradient descent
-- snn_benchmark.py
+- `snn_benchmark.py`
   - Python file used to benchmark the performance of the 784-100 various spiking neural networks 
-- snn_benchmark.sh
+- `snn_benchmark.sh`
   - Bash script used to benchmark all of the different variations of the 784-100 spiking neural network
 
 ## Dependencies
