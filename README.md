@@ -4,12 +4,16 @@ This repository contains the code used in our CS 5824/ ECE 5424 project: Spiking
 
 ## Repository Setup
 - Models
-  - Contains the snn_models.py file
+  - Directory that contains the `ann_models.py` file where the 784-100 artificial neural network model is defined
+  - Directory that contains the `snn_models.py` file where various versions of the 784-100 spiking neural network model are defined
 - Networks
   - Contains the generated SNNs used to perform the classification task. Each model name has the encoding scheme, neuron model, and learning rule used to train it.
 - ann_benchmark.py
+  - Python file used to benchmark the performance of the 784-100 artificial neural network using stoachstic gradient descent
 - snn_benchmark.py
+  - Python file used to benchmark the performance of the 784-100 various spiking neural networks 
 - snn_benchmark.sh
+  - Bash script used to benchmark all of the different variations of the 784-100 spiking neural network
 
 ## Dependencies
 Several external packages need to be installed in order for this project to run successfully. Each of these packages is noted below.
@@ -45,6 +49,8 @@ To install PyTorch, use the following command:
 - Ahmadhossein Yazdani ([email](ahmadyazdani@vt.edu))
 
 ## References
+> Diehl, P. U., & Cook, M. (2015). Unsupervised learning of digit recognition using spike-timing-dependent plasticity. Frontiers in computational neuroscience, 9, 99.
+
 > Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., ... & Desmaison, A. (2019). Pytorch: An imperative style, high-performance deep learning library. In Advances in neural information processing systems (pp. 8026-8037).
 
 > Hazan, H., Saunders, D. J., Khan, H., Patel, D., Sanghavi, D. T., Siegelmann, H. T., & Kozma, R. (2018). Bindsnet: A machine learning-oriented spiking neural networks library in python. Frontiers in neuroinformatics, 12, 89.
