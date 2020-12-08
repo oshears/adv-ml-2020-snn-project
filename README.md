@@ -1,6 +1,8 @@
 #  Spiking Neural Networks for Image Classification
 ## CS 5824/ECE 5424 Project Repository
-This repository contains the code used in our CS 5824/ ECE 5424 project: Spiking Neural Networks for Image Classification. The goal of this project was to create several spiking neural network models using [Diehl and Cook's (2015)](https://www.frontiersin.org/articles/10.3389/fncom.2015.00099/full) architecure to benchmark their accuracy when classifying images from the MNIST dataset. The models created utilized various encoding schemes, neuron models, and learning rules to perform this task.
+This repository contains the code used in our CS 5824/ ECE 5424 project: **Spiking Neural Networks for Image Classification**. 
+
+The goal of this project was to create several spiking neural network models using [Diehl and Cook's (2015)](https://www.frontiersin.org/articles/10.3389/fncom.2015.00099/full) architecure to benchmark their accuracy when classifying images from the MNIST dataset. The models created utilized various encoding schemes, neuron models, and learning rules to perform this task.
 
 ## Repository Setup
 - `./models`
@@ -35,16 +37,26 @@ To install PyTorch, use the following command:
 ### BindsNET
 [BindsNET](https://www.frontiersin.org/articles/10.3389/fninf.2018.00089/full) is a framework developed by Hazan et al. (2018) that provides a streamlined way to construct and evaluate spiking neural networks (SNNs). It uses some of the foundational classes provided in PyTorch in order to provide consistency with the older framework.
 
-```pip install bindsnet```
+To install BindsNet, use the following command:
+```pip install git+https://github.com/BindsNET/bindsnet.git```
 
 ## Running the SNN Benchmark 
-```python benchmark --encoding [Poisson | Bernoulli | RankOrder] --neural_model [IF | LIF | SRM0 | DiehlAndCook] --update_rule [PostPre | WeightDependentPostPre | Hebbian]```
+The `snn_benchmark.py` script is used to run one of the spiking neural network variations. It takes three arguments that specify the encoding scheme, neural model and learning rule to be used for training the network.
+
+Usage:
+```python benchmark.py --encoding [Poisson | Bernoulli | RankOrder] --neural_model [IF | LIF | SRM0 | DiehlAndCook] --update_rule [PostPre | WeightDependentPostPre | Hebbian]```
 
 ## Running the SNN Benchmark Script
-```bash benchmark.sh```
+The `snn_benchmark.sh` script is used to run all of the SNN model variations. 
+
+Usage:
+```bash snn_benchmark.sh```
 
 ## Running the ANN Benchmark
-```python ann_benchmark.py```
+The `ann_benchmark.py` script is used to run the artificial neural network (trained using stochastic gradient descent).
+
+Usage:
+```python snn_benchmark.py```
 
 ## Contributors
 - Osaze Shears ([email](oshears@vt.edu))
