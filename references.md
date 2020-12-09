@@ -16,18 +16,3 @@
 [8] Garrick Orchard et al. “Converting static image datasets to spiking neuromorphic datasetsusing saccades”. In:Frontiers in Neuroscience9 (Nov. 2015), p. 437.issn: 1662453X.doi:10.3389/fnins.2015.00437. arXiv:1507.07629.url:http://journal.frontiersin.org/Article/10.3389/fnins.2015.00437/abstract%20http://arxiv.org/abs/1912.11370.
 
 [9] Hongmin Li et al. “CIFAR10-DVS: An event-stream dataset for object classification”. In:Frontiers in Neuroscience11 (May 2017), p. 309.issn: 1662453X.doi:10.3389/fnins.2017.00309.url:http://journal.frontiersin.org/article/10.3389/fnins.2017.00309/full.
-
-<!-- Navigation Bar -->
-<br><br><br><br>
-<div style="text-align: center; background-color: white;">
-<div style="color:#666a67"> Website Navigation</div>
-<p style="text-align: center; background-color: white;">
-  <a href="./index.html">Abstract</a> |
-  <a href="./problem.html">Problem Definition</a> | 
-  <a href="./motivation.html">Motivation</a> | 
-  <a href="./related.html">Related Works</a> | 
-  <a href="./methods.html">Methods</a> | 
-  <a href="./results.html">Results</a> | 
-  <a href="./references.html">References</a>
-</p>
-</div>
