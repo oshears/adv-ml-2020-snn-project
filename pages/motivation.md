@@ -18,15 +18,17 @@ SNNs have three primary components needed for simulation: an encoding scheme, a 
 ## Encoding Data for SNNs
 Many schemes exist for encoding input data into spikes that can be fed into a SNN. Rate coding is one of the most popular encoding schemes which maps an input’s intensity to its corresponding input neuron’s firing rate. The higher the intensity of the input, the more frequently the input neuron will fire a spike.
 
-[Explain diagram]
+ <img src="../resources/rate_coding.png" alt="Rate Coding" class="center_img"> 
 
 Temporal coding aims to take a more sparse approach at encoding the input data. Each input neuron only fires once: inputs with higher intensities fire earlier than inputs with lower intensities.
 
-[Explain diagram]
+ <img src="../resources/temporal_coding.png" alt="Temporal Coding" class="center_img"> 
+
 
 Population coding is a less popular approach where each input corresponds to several neurons, and the input is encoded by adjusting the times at which each of the input neurons fire.
 
-[Explain diagram]
+ <img src="../resources/population_coding.png" alt="Population Coding" class="center_img"> 
+
 
 Each encoding scheme has its tradeoffs. A rate coding scheme is very robust to noise that may be transmitted with the input spikes, however, neurons firing at a high rate cause the circuit to be more active and therefore consume more power. Additionally, the SNN will need to be simulated for an adequate amount time to accurately measure the input neuron rates.
 A temporal coding scheme uses less energy because spikes are only transmitted once, but it is very susceptible to noise that gets transmitted in place of spikes.
@@ -37,9 +39,14 @@ Like changing the activation function for a neuron in a standard ANN, the behavi
 The leaky integrate-and-fire, LIF, model has also been derived as a more biologically accurate model. In an LIF neuron, the membrane potential decrements towards a resting value at each timestep. The longer the neuron goes without receiving an input spike, the closer the membrane potential will get to its resting state.
 Lastly, the adaptive LIF model is like the LIF model, with the only exception being that when the neuron emits a spike, the neuron’s threshold value increases to prevent it from quickly firing again. The threshold value will continue to increase each time the neuron fires, and gradually decays towards a resting value when the neuron is not firing.
 
+ <img src="../resources/neuron_models.png" alt="Neuron Models" class="center_img"> 
+
 ## Learning Techniques for SNNs
 The most commonly used learning technique used for SNNs is spike-timing-dependent-plasticity, or STDP. This learning rule operates on the behavior: “neurons that fire together, wire together”. In this technique, if a pre-synaptic neuron fires just before a post-synaptic neuron, the weight between those two neurons is increased. This behavior is called long-term potentiation and the intuition is that the connection between the neurons should be strengthened if the pre-synaptic neuron causes the post-synaptic neuron to spike. Alternatively, if a pre-synaptic neuron fires just after a post-synaptic neuron, the weight between those two neurons is decreased. This behavior is called long-term depression and the intuition is that the connection should be weakened if the pre-synaptic neuron has no relation to the post-synaptic neuron.
 Several variations have been added on top of the simple STDP to add more versatility to the learning process. For example in some simple supervised STDP approaches, a teacher signal is used to force the output neuron that corresponds to a designated class to remain in a firing state, while STDP adjusts the weights of the synapses that produced spikes correlating to the teacher signal. Reward modulated STDP is another approach that merges reinforcement learning with STDP to model a biological dopamine response. And finally, biologically inspired backpropagation techniques work to optimize each neurons’ membrane potential function.
+
+ <img src="../resources/stdp.png" alt="Spike-Timing-Dependent-Plasticity" class="center_img"> 
+
 
 ## Challenges with Implementing SNNs
 Though they have extraordinary potential as outlined by their advantages, there are several challenges that are limiting the application of SNNs in machine learning problems.
