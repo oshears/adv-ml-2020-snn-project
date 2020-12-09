@@ -1,3 +1,5 @@
+Project by Osaze Shears and Ahmadhossein Yazdani
+
 ## Abstract
 
 You can use the [editor on GitHub](https://github.com/oshears/adv-ml-2020-snn-project/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
