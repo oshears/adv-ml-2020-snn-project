@@ -50,7 +50,7 @@ To install BindsNet, use the following command:
 The `snn_benchmark.py` script is used to run one of the spiking neural network variations. It takes three arguments that specify the encoding scheme, neural model and learning rule to be used for training the network.
 
 Usage:
-```python benchmark.py --encoding [Poisson | Bernoulli | RankOrder] --neural_model [IF | LIF | SRM0 | DiehlAndCook] --update_rule [PostPre | WeightDependentPostPre | Hebbian]```
+```python snn_benchmark.py --encoding [Poisson | Bernoulli | RankOrder] --neural_model [IF | LIF | SRM0 | DiehlAndCook] --update_rule [PostPre | WeightDependentPostPre | Hebbian]```
 
 ## Running the SNN Benchmark Script
 The `snn_benchmark.sh` script is used to run all of the SNN model variations. 
@@ -62,7 +62,7 @@ Usage:
 The `ann_benchmark.py` script is used to run the artificial neural network (trained using stochastic gradient descent).
 
 Usage:
-```python snn_benchmark.py```
+```python ann_benchmark.py```
 
 ## Contributors
 - Osaze Shears ([email](oshears@vt.edu))
