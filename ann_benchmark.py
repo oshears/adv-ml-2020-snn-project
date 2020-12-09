@@ -49,7 +49,8 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 print(device)
 
-model = ANN_Model(len(classes))
+## instantiating the model of the architecture imported from models package.
+model = ANN_Model()
 
 # moving the network into the GPU if it's available.
 model = model.to(device)
