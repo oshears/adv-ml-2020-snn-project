@@ -13,7 +13,7 @@ These experiments are performed using the PyTorch and BindsNET python packages [
 # Project Resources
 - [Project Report]()
 - [Project Video](https://www.youtube.com/watch?v=yVP_vmSdnkg)
-- [Project Presentation](./Spiking Neural Networks for Image Classification.pdf)
+- [Project Presentation](./Spiking Neural Networks for Image Classification Presentation.pdf)
 - [Source Code](https://github.com/oshears/adv-ml-2020-snn-project)
 
 # Project Video
@@ -27,3 +27,13 @@ These experiments are performed using the PyTorch and BindsNET python packages [
 - [Methods](./methods.md)
 - [Results](./results.md)
 - [References](./references.md)
+
+<p style="text-align: center; background-color: white;">
+  <a href="{{./index.md}}">Abstract</a> |
+  <a href="{{./problem.md}}">Problem Definition</a> | 
+  <a href="{{./motivation.md}}">Motivation</a> | 
+  <a href="{{./related.md}}">Related Works</a> | 
+  <a href="{{./methods.md}}">Methods</a> | 
+  <a href="{{./results.md}}">Results</a> | 
+  <a href="{{./references.md}}">References</a>
+</p>
