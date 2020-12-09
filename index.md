@@ -19,21 +19,13 @@ These experiments are performed using the PyTorch and BindsNET python packages [
 # Project Video
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yVP_vmSdnkg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-# Pages
-- [Abstract](./index.md)
-- [Problem Definition](./problem.md)
-- [Motivation](./motivation.md)
-- [Related Works](./related.md)
-- [Methods](./methods.md)
-- [Results](./results.md)
-- [References](./references.md)
 
 <p style="text-align: center; background-color: white;">
-  <a href="{{./index.md}}">Abstract</a> |
-  <a href="{{./problem.md}}">Problem Definition</a> | 
-  <a href="{{./motivation.md}}">Motivation</a> | 
-  <a href="{{./related.md}}">Related Works</a> | 
-  <a href="{{./methods.md}}">Methods</a> | 
-  <a href="{{./results.md}}">Results</a> | 
-  <a href="{{./references.md}}">References</a>
+  <a href="./index.md">Abstract</a> |
+  <a href="./problem.md">Problem Definition</a> | 
+  <a href="./motivation.md">Motivation</a> | 
+  <a href="./related.md">Related Works</a> | 
+  <a href="./methods.md">Methods</a> | 
+  <a href="./results.md">Results</a> | 
+  <a href="./references.md">References</a>
 </p>
