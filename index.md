@@ -10,16 +10,17 @@ Our group expands on the research of Deng et al. (2020) in comparing ANNs to SNN
 
 These experiments are performed using the PyTorch and BindsNET python packages [5]. PyTorch is a framework that allows researchers to quickly develop ANN models to test, while BindsNet is a recently developed extension of PyTorch that provides a way to create and train SNN models. The ANN model will be tested against the traditional MNIST and CIFAR10 benchmarks [6][7], while the SNN models will be tested against the developed NMNIST and CIFAR10-DVS data sets [8][9].
 
-### Project Resources
+# Project Resources
 - [Project Report]()
 - [Project Video](https://www.youtube.com/watch?v=yVP_vmSdnkg)
 - [Project Presentation](./Spiking Neural Networks for Image Classification.pdf)
 - [Source Code](https://github.com/oshears/adv-ml-2020-snn-project)
 
-### Project Video
+# Project Video
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yVP_vmSdnkg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-### Pages
+# Pages
+- [Abstract](./index.md)
 - [Problem Definition](./problem.md)
 - [Motivation](./motivation.md)
 - [Related Works](./related.md)
