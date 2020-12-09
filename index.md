@@ -13,7 +13,7 @@ These experiments are performed using the PyTorch and BindsNET python packages [
 # Project Resources
 - [Project Report]()
 - [Project Video](https://www.youtube.com/watch?v=yVP_vmSdnkg)
-- [Project Presentation](./snn_presentation.pdf)
+- [Project Presentation](./resources/snn_presentation.pdf)
 - [Source Code](https://github.com/oshears/adv-ml-2020-snn-project)
 
 # Project Video

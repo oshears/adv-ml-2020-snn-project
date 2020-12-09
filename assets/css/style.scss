@@ -1,10 +1,19 @@
+---
+---
+
 @import "{{ site.theme }}";
 
 .nav_bg{
     background: transparent;
 }
 
-.center_img {
-    display: flex;
-    justify-content: center;
+.custom_caption {
+  font-style: italic;
+  font-size: small;
+  padding: 2px;
+  text-align: center;
 }
+
+.center_img {
+    align-items: center;
+  }
