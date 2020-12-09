@@ -18,6 +18,7 @@
 [9] Hongmin Li et al. “CIFAR10-DVS: An event-stream dataset for object classification”. In:Frontiers in Neuroscience11 (May 2017), p. 309.issn: 1662453X.doi:10.3389/fnins.2017.00309.url:http://journal.frontiersin.org/article/10.3389/fnins.2017.00309/full.
 
 <!-- Navigation Bar -->
+<br><br><br><br>
 <div style="text-align: center; background-color: white;">
 <div style="color:#666a67"> Website Navigation</div>
 <p style="text-align: center; background-color: white;">

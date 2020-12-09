@@ -1,6 +1,6 @@
 # Abstract
 
-Artificial neural networks (ANNs) have greatly advanced the field of video and image processing. These machine learning algorithms have been proven to excel at tasks such as object detection and handwritten digit recognition. This is shown in Wan et al.’s (2013) approach that performs handwritten digit recognition on the MNIST data set with 0.21\% error, and Kolesnikov et al.’s (2019) approach that performs image classification on the CIFAR10 data set with 99.37\% accuracy [1][2]. 
+Artificial neural networks (ANNs) have greatly advanced the field of video and image processing. These machine learning algorithms have been proven to excel at tasks such as object detection and handwritten digit recognition. This is shown in Wan et al.’s (2013) approach that performs handwritten digit recognition on the MNIST data set with 0.21% error, and Kolesnikov et al.’s (2019) approach that performs image classification on the CIFAR10 data set with 99.37% accuracy [1][2]. 
 
 Although ANNs have achieved incredibly high levels of accuracy on these tasks when simulated in traditional computing environments, there is an increasing demand for performing these tasks in real time on embedded computer systems with low power consumption. For example, an autonomous unmanned aerial vehicle running on a battery power supply may employ an ANN to assist with collision avoidance. For tasks such as this, researchers believe that spiking neural networks (SNNs) are a suitable alternative because of their energy efficiency and event-driven architectures [3].
 
@@ -20,6 +20,7 @@ These experiments are performed using the PyTorch and BindsNET python packages [
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yVP_vmSdnkg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <!-- Navigation Bar -->
+<br><br><br><br>
 <div style="text-align: center; background-color: white;">
 <div style="color:#666a67"> Website Navigation</div>
 <p style="text-align: center; background-color: white;">

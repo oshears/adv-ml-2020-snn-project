@@ -1,5 +1,6 @@
 # Motivation
 <!-- Navigation Bar -->
+<br><br><br><br>
 <div style="text-align: center; background-color: white;">
 <div style="color:#666a67"> Website Navigation</div>
 <p style="text-align: center; background-color: white;">
