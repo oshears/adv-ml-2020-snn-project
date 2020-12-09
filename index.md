@@ -13,19 +13,22 @@ These experiments are performed using the PyTorch and BindsNET python packages [
 # Project Resources
 - [Project Report]()
 - [Project Video](https://www.youtube.com/watch?v=yVP_vmSdnkg)
-- [Project Presentation](./Spiking Neural Networks for Image Classification Presentation.pdf)
+- [Project Presentation](./Spiking-Neural-Networks-for-Image Classification-Presentation.pdf)
 - [Source Code](https://github.com/oshears/adv-ml-2020-snn-project)
 
 # Project Video
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yVP_vmSdnkg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
+<!-- Navigation Bar -->
+<div style="text-align: center; background-color: white;">
+<div style="color:#666a67"> Website Navigation</div>
 <p style="text-align: center; background-color: white;">
-  <a href="./index.md">Abstract</a> |
-  <a href="./problem.md">Problem Definition</a> | 
-  <a href="./motivation.md">Motivation</a> | 
-  <a href="./related.md">Related Works</a> | 
-  <a href="./methods.md">Methods</a> | 
-  <a href="./results.md">Results</a> | 
-  <a href="./references.md">References</a>
+  <a href="./index.html">Abstract</a> |
+  <a href="./problem.html">Problem Definition</a> | 
+  <a href="./motivation.html">Motivation</a> | 
+  <a href="./related.html">Related Works</a> | 
+  <a href="./methods.html">Methods</a> | 
+  <a href="./results.html">Results</a> | 
+  <a href="./references.html">References</a>
 </p>
+</div>
