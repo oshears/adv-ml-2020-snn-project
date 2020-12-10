@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # Problem Definition
 
 ## Optimizing Hardware for Neural Networks

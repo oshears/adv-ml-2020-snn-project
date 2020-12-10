@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # Related Work
 
 ## Diehl and Cook (2015)

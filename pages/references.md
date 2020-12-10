@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # References
 [1] Li Wan et al. “Regularization of neural networks using DropConnect”. In:Proceedings ofMachine Learning Research. Ed. by Sanjoy Dasgupta and David McAllester. 28. PMLR,2013, pp. 1058–1066.url:http://proceedings.mlr.press/v28/wan13.html.
 

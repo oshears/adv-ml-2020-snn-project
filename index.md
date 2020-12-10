@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # Abstract
 
 Artificial neural networks (ANNs) have greatly advanced the field of video and image processing. These machine learning algorithms have been proven to excel at tasks such as object detection and handwritten digit recognition. This is shown in Wan et al.’s (2013) approach that performs handwritten digit recognition on the MNIST data set with 0.21% error, and Kolesnikov et al.’s (2019) approach that performs image classification on the CIFAR10 data set with 99.37% accuracy [1][2]. 
