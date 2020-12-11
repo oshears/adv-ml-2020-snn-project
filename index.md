@@ -7,7 +7,7 @@ Artificial neural networks (ANNs) have greatly advanced the field of video and i
 
 Researchers believe that spiking neural networks (SNNs) are a suitable alternative because of their energy efficiency and event-driven architectures [3]. However, more research is required on SNNs to determine the best neural models, encoding methods and training techniques for their use in applications such as image processing applications.
 
-Our group expands on the research of Deng et al. (2020) in comparing ANNs to SNNs for image classification tasks [4]. Deng et al. (2020) compare ANNs to SNNs by comparing their accuracy in classifying samples from the MNIST benchmark. Our group reimplements the tests performed in BindsNET [5] using different neural models, encoding methods, and training techniques to study how these factors affect the SNN model accuracy.
+Our group expands on the research of Deng et al. (2020) in comparing ANNs to SNNs for image classification tasks [4]. Deng et al. (2020) compare ANNs to SNNs by comparing their accuracy in classifying samples from the MNIST benchmark. Our group reimplements these tests in the BindsNET framework [5] using different neural models, encoding methods, and training techniques to study how these factors affect the SNN model accuracy.
 
 # Project Resources
 - [Project Report]()
