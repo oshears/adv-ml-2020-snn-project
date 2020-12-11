@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+# Discussion
 
 As explained in the introduction, SNNs are really promising in the sense that they are
 really time-efficient as well as being fast. Looks like Diehl and Cook model with poisson
