@@ -10,4 +10,8 @@ layout: default
 <figcaption class="custom_caption" width="100" height="100">Diehl and Cook SNN Architecture</figcaption>
 </div>
 
+{% include Diehl_Cook.md %}
+
 ## Deng et al. (2020)
+
+{% include Deng.md %}

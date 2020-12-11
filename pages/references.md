@@ -19,3 +19,5 @@ layout: default
 [8] Garrick Orchard et al. “Converting static image datasets to spiking neuromorphic datasetsusing saccades”. In:Frontiers in Neuroscience9 (Nov. 2015), p. 437.issn: 1662453X.doi:10.3389/fnins.2015.00437. arXiv:1507.07629.url:http://journal.frontiersin.org/Article/10.3389/fnins.2015.00437/abstract%20http://arxiv.org/abs/1912.11370.
 
 [9] Hongmin Li et al. “CIFAR10-DVS: An event-stream dataset for object classification”. In:Frontiers in Neuroscience11 (May 2017), p. 309.issn: 1662453X.doi:10.3389/fnins.2017.00309.url:http://journal.frontiersin.org/article/10.3389/fnins.2017.00309/full.
+
+[10] P. U. Diehl and M. Cook, “Unsupervised learning of digit recognition using spike-timing-dependent plasticity,” Frontiers, 16-Jul-2015. [Online]. Available: https://www.frontiersin.org/articles/10.3389/fncom.2015.00099/full. 
