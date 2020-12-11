@@ -2,22 +2,22 @@
 layout: default
 ---
 # References
-[1] Li Wan et al. “Regularization of neural networks using DropConnect”. In:Proceedings ofMachine Learning Research. Ed. by Sanjoy Dasgupta and David McAllester. 28. PMLR,2013, pp. 1058–1066.url:http://proceedings.mlr.press/v28/wan13.html.
+[1] Wan, L., Zeiler, M., Zhang, S., Le Cun, Y., & Fergus, R. (2013, February). Regularization of neural networks using dropconnect. In International conference on machine learning (pp. 1058-1066).
 
-[2] Alexander Kolesnikov et al.Big Transfer (BiT): General Visual Representation Learning.Tech. rep. 2019. arXiv:1912.11370v3.
+[2] Kolesnikov, A., Beyer, L., Zhai, X., Puigcerver, J., Yung, J., Gelly, S., & Houlsby, N. (2019). Big transfer (bit): General visual representation learning. arXiv preprint arXiv:1912.11370, 6, 3.
 
-[3] Maxence  Bouvier  et  al.  “Spiking  neural  networks  hardware  implementations  and  chal-lenges:  A  survey”.  In:ACM Journal on Emerging Technologies in Computing Systems15.2 (Apr. 2019).issn: 15504840.doi:10.1145/3304103.
+[3] Bouvier, M., Valentian, A., Mesquida, T., Rummens, F., Reyboz, M., Vianello, E., & Beigne, E. (2019). Spiking neural networks hardware implementations and challenges: A survey. ACM Journal on Emerging Technologies in Computing Systems (JETC), 15(2), 1-35.
 
-[4] Lei Deng et al. “Rethinking the performance comparison between SNNS and ANNS”. In:Neural Networks121 (Jan. 2020), pp. 294–307.issn: 18792782.doi:10.1016/j.neunet.2019.09.005.
+[4] Deng, L., Wu, Y., Hu, X., Liang, L., Ding, Y., Li, G., ... & Xie, Y. (2020). Rethinking the performance comparison between SNNS and ANNS. Neural Networks, 121, 294-307.
 
-[5] Hananel Hazan et al. “BindsNET: A machine learning-oriented spiking neural networkslibrary in python”. In:Frontiers in Neuroinformatics12 (Dec. 2018).issn: 16625196.doi:10.3389/fninf.2018.00089. arXiv:1806.01423.
+[5] Hazan, H., Saunders, D. J., Khan, H., Patel, D., Sanghavi, D. T., Siegelmann, H. T., & Kozma, R. (2018). Bindsnet: A machine learning-oriented spiking neural networks library in python. Frontiers in neuroinformatics, 12, 89.
 
-[6] Yann LeCun, Corinna Cortes, and CJ Burges. “MNIST handwritten digit database”. In:AT&T Labs [Online]. Available: http://yann.lecun.com/exdb/mnist2 (2010).url:http://yann.lecun.com/exdb/mnist/.
+[6] Yann LeCun, Corinna Cortes, and CJ Burges. “MNIST handwritten digit database”. In:AT&T Labs [Online]. Available: http://yann.lecun.com/exdb/mnist2 (2010). url:http://yann.lecun.com/exdb/mnist/.
 
-[7] Alex Krizhevsky.Learning multiple layers of features from tiny images. Tech. rep. 2009.url:http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.222.9220%7B%5C&%7Drep=rep1%7B%5C&%7Dtype=pdf.
+[7] Krizhevsky, A., & Hinton, G. (2009). Learning multiple layers of features from tiny images.
 
-[8] Garrick Orchard et al. “Converting static image datasets to spiking neuromorphic datasetsusing saccades”. In:Frontiers in Neuroscience9 (Nov. 2015), p. 437.issn: 1662453X.doi:10.3389/fnins.2015.00437. arXiv:1507.07629.url:http://journal.frontiersin.org/Article/10.3389/fnins.2015.00437/abstract%20http://arxiv.org/abs/1912.11370.
+[8] Orchard, G., Jayawant, A., Cohen, G. K., & Thakor, N. (2015). Converting static image datasets to spiking neuromorphic datasets using saccades. Frontiers in neuroscience, 9, 437.
 
-[9] Hongmin Li et al. “CIFAR10-DVS: An event-stream dataset for object classification”. In:Frontiers in Neuroscience11 (May 2017), p. 309.issn: 1662453X.doi:10.3389/fnins.2017.00309.url:http://journal.frontiersin.org/article/10.3389/fnins.2017.00309/full.
+[9] Li, H., Liu, H., Ji, X., Li, G., & Shi, L. (2017). CIFAR10-DVS: An event-stream dataset for object classification. Frontiers in neuroscience, 11, 309.
 
-[10] P. U. Diehl and M. Cook, “Unsupervised learning of digit recognition using spike-timing-dependent plasticity,” Frontiers, 16-Jul-2015. [Online]. Available: https://www.frontiersin.org/articles/10.3389/fncom.2015.00099/full. 
+[10] Diehl, P. U., & Cook, M. (2015). Unsupervised learning of digit recognition using spike-timing-dependent plasticity. Frontiers in computational neuroscience, 9, 99.

@@ -3,11 +3,11 @@ layout: default
 ---
 # Methods
 
-In this project, we work with BindsNet framework which uses pytorch as the backend
+In this project, we work with BindsNet framework which uses PyTorch as the backend
 library. As everyone knows, Pytorch is a deep learning framework widely used by
 researchers on deep learning because it provides facilities to work with GPU.
-In this work, we slight modify Diehl and Cook neural network which has been implemented
-in BindsNet and use Neuron models as what follows:
+In this work, we slight modify Diehl and Cook's neural network which has been implemented
+in BindsNet and use neuron models as what follows:
 
 1. Integrate and fire model
 2. Leaky Integrate and fire model

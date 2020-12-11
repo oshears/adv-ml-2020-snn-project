@@ -70,8 +70,11 @@ Like changing the activation function for a neuron in a standard ANN, the behavi
 The leaky integrate-and-fire, LIF, model has also been derived as a more biologically accurate model. In an LIF neuron, the membrane potential decrements towards a resting value at each timestep. The longer the neuron goes without receiving an input spike, the closer the membrane potential will get to its resting state.
 
 ### Adaptive Leaky Integrate-and-Fire
-Lastly, the adaptive LIF model is like the LIF model, with the only exception being that when the neuron emits a spike, the neuron’s threshold value increases to prevent it from quickly firing again. The threshold value will continue to increase each time the neuron fires, and gradually decays towards a resting va
+The adaptive LIF model is like the LIF model, with the only exception being that when the neuron emits a spike, the neuron’s threshold value increases to prevent it from quickly firing again. The threshold value will continue to increase each time the neuron fires, and gradually decays towards a resting va
 lue when the neuron is not firing.
+
+### Spike Response Model 0 (SRM0)
+Lastly, the spike response model 0 (SRM0) is a neuron model that also features a leaking membrane voltage. In addition to this, the spikes produced by this model are generated stochastically, where the probability of the neuron spiking increases as a function of the membrane potential.
 
 <div align="center">
 <img src="../resources/neuron_models.png" alt="Neuron Models">
