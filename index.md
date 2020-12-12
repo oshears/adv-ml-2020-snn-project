@@ -10,7 +10,7 @@ Researchers believe that spiking neural networks (SNNs) are a suitable alternati
 Our group expands on the research of Deng et al. (2020) in comparing ANNs to SNNs for image classification tasks [4]. Deng et al. (2020) compare ANNs to SNNs by comparing their accuracy in classifying samples from the MNIST benchmark. Our group reimplements these tests in the BindsNET framework [5] using different neural models, encoding methods, and training techniques to study how these factors affect the SNN model accuracy.
 
 # Project Resources
-- [Project Report]()
+- [Project Report]({{site.baseurl}}/report/Advanced_Machine_Learning_Project_Report.pdf)
 - [Project Video](https://www.youtube.com/watch?v=yVP_vmSdnkg)
 - [Project Presentation](./resources/snn_presentation.pdf)
 - [Source Code](https://github.com/oshears/adv-ml-2020-snn-project)
