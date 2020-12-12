@@ -4,3 +4,4 @@ Gemfile.lock
 /.sass-cache/
 .idea/
 
+.DS_Store
